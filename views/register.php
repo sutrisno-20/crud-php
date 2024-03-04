@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?=$data['title']; ?></title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <?php 
@@ -25,6 +25,14 @@
             }
         }
 
+        // validate password
+        if (strlen($password) < 3) {
+            $passwordErr = "Password at least 3 character";
+        }else{
+            $passwordSec = trim(htmlentities($password));
+            $passwordSecured = password_hash($passwordSec, PASSWORD_DEFAULT);
+        }
+
         // validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid Format Email";
@@ -38,13 +46,6 @@
             }
         }
 
-        // validate password
-        if (strlen($password) < 3) {
-            $passwordErr = "Password at least 3 character";
-        }else{
-            $passwordSecured = trim(htmlentities(password_hash($password, PASSWORD_BCRYPT)));
-        }
-
         // validate agaian for all
         if (isset($usernameSecured) && isset($emailSecured) && isset($passwordSecured)) {
             // insert to database
@@ -54,6 +55,7 @@
         }else {
             $error = "Failed to Register";
         }
+
 
     }
 ?>
