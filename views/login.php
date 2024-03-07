@@ -16,16 +16,29 @@
          $result = mysqli_query($conn,$query);
          if(mysqli_num_rows($result)>0) { 
              $user = mysqli_fetch_assoc($result);
-            //  var_dump($user);
              if(password_verify($password,$user['password'])) {
-                // echo "sukses login";
-                 // Redirect to login page
-                 header("location: index.php?url=dashboard");
+                
+                 session_start();
+                 $_SESSION['user'] = $user['username'];
+                 $_SESSION['status'] = $user['status'];
+                 if(isset($_SESSION['user']) && $_SESSION['status'] == 1) {
+                    header("location: index.php?url=admin");
+                    exit();   
+                 }
+                 if(isset($_SESSION['user']) && $_SESSION['status'] == 2) {
+                    header("location: index.php?url=dashboard");
+                    exit();   
+                 }
+                 
+                header("location: index.php?url=login&status=Anda Harus Register Dahulu!!!");
+                exit();
+        
+                 
              }else{
-                echo "gagal";
+                $err = "Username or Password is Wrong";
              }
          }else{
-             echo "Username  is wrong";
+             $err = "Username or Password is Wrong";
          }
     }
 
@@ -38,6 +51,16 @@
     <div class="form">
         <form action="" method="post">
             <div class="form-group">
+            <small class="success <?=(isset($_GET['success'])) ? 'good':'err';?>">
+                    <?php 
+                        if (isset($_GET['success'])) {
+                            echo $_GET['success'];
+                        }
+                        if(isset($err)){
+                            echo $err;
+                        }
+                    ?>
+                </small>
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" class="form-control">
             </div>
@@ -48,6 +71,15 @@
             <div class="form-group d-flex justify-content-space-between mt-3">
                 <button type="submit" name="login" class="letter-spacing">Login</button>
                 <button type="submit" name="signup" class="letter-spacing">Register</button>
+            </div>
+            <div class="form-group text-center">
+                <small class="err">
+                    <?php 
+                    if (isset($_GET['status'])) {
+                        echo $_GET['status'];
+                    }
+                    ?>
+                </small>
             </div>
         </form>
     </div>

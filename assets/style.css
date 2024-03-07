@@ -46,9 +46,15 @@
 .d-flex {
     display: flex;
 }
+.justify-content-center {
+    justify-content: center;
+}
 .justify-content-space-between {
     justify-content: space-between;
 }
 .mt-3 {
     margin-top: 30px;
+}
+.text-center {
+    text-align: center;
 }

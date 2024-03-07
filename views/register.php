@@ -51,7 +51,7 @@
             // insert to database
             $query = "INSERT INTO users(username,password,email) VALUES ('$usernameSecured','$passwordSecured','$emailSecured')";
             mysqli_query($conn,$query);
-            $success = "You Have Successfully Registered";            
+            header("location: index.php?url=login&success=You Have Successfully Registered");
         }else {
             $error = "Failed to Register";
         }
@@ -63,11 +63,8 @@
     <div class="form">
         <form action="" method="post">
             <div class="form-group">
-                <small class="success <?=(isset($success)) ? 'good':'err';?>">
+                <small class="success <?=(isset($error)) ? 'err':'';?>">
                     <?php 
-                        if (isset($success)) {
-                            echo $success;
-                        }
                         if (isset($error)) {
                             echo $error;
                         }
