@@ -43,6 +43,11 @@
                     header("location: index.php?url=login&status=Anda Harus Login Sebagai Admin!");
                 }
                 break;
+            case "logout":
+                require_once 'connect.php';
+                include $path;
+                header("location: index.php?url=login&logout=Anda Berhasil Logout");
+                break;
             default:
                 echo "404 Page is not found";
         }

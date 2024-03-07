@@ -8,5 +8,6 @@
 <body>
     <h1>LOGIN SUKSES ADMIN</h1>
     <h1>Selamat Datang <?=$_SESSION['user']; ?></h1>
+    <p><a href="index.php?url=logout">Logout</a></p>
 </body>
 </html>

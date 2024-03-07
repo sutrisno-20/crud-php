@@ -51,13 +51,16 @@
     <div class="form">
         <form action="" method="post">
             <div class="form-group">
-            <small class="success <?=(isset($_GET['success'])) ? 'good':'err';?>">
+            <small class="success <?=(isset($_GET['success']) || isset($_GET['logout'])) ? 'good':'err';?>">
                     <?php 
                         if (isset($_GET['success'])) {
                             echo $_GET['success'];
                         }
                         if(isset($err)){
                             echo $err;
+                        }
+                        if (isset($_GET['logout'])) {
+                            echo $_GET['logout'];
                         }
                     ?>
                 </small>
